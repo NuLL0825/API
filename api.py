@@ -15,18 +15,22 @@ mysql = MySQL(app)
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/customers", methods=["GET"])
-def get_customers():
+def data_fetch(query):
     cur = mysql.connection.cursor()
-    query = """
-    select * from customers
-    """
     cur.execute(query)
     data = cur.fetchall()
     cur.close()
+    return data
 
+@app.route("/customers", methods=["GET"])
+def get_customers():
+    data = data_fetch("""select * from customers""")
     return make_response(jsonify(data), 200)
 
+@app.route("/customers/<int:id>", methods=["GET"])
+def get_customers_by_id(id):
+    data = data_fetch("""select * from customers where customer_id = {}""".format(id))
+    return make_response(jsonify(data), 200)
 
 if __name__ == "__main__":
     app.run(debug=True)
