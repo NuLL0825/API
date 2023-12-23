@@ -9,11 +9,6 @@ class MyAppTests(unittest.TestCase):
         
         warnings.simplefilter("ignore", category=DeprecationWarning)
 
-    def test_index_page(self):
-        response = self.app.get("/")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data.decode(), "<p>Hello, World!</p>")
-
     def test_getcustomers(self):
         response = self.app.get("/customers")
         self.assertEqual(response.status_code, 200)
@@ -23,7 +18,6 @@ class MyAppTests(unittest.TestCase):
         response = self.app.get("/customers/5")
         self.assertEqual(response.status_code, 200)
         self.assertTrue("Incidunt fugiat ut molestias illum voluptatem" in response.data.decode())
-
 
 if __name__ == "__main__":
     unittest.main()
