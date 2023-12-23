@@ -13,7 +13,7 @@ mysql = MySQL(app)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hellow, World!</p>"
+    return "<p>Hello, World!</p>"
 
 @app.route("/customers", methods=["GET"])
 def get_customers():
