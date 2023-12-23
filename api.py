@@ -1,4 +1,4 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -31,6 +31,11 @@ def get_customers():
 def get_customers_by_id(id):
     data = data_fetch("""select * from customers where customer_id = {}""".format(id))
     return make_response(jsonify(data), 200)
+
+@app.route("/customers", methods=["POST"])
+def add_customer():
+    cur = mysql.connection.cursor()
+    info = request.get.json()
 
 if __name__ == "__main__":
     app.run(debug=True)
